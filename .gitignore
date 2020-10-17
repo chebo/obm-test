@@ -130,3 +130,4 @@ dmypy.json
 
 screenshot.png
 .idea
+logs/*
