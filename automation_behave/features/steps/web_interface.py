@@ -7,7 +7,8 @@ from automation_behave.utilites.env import Env
 
 use_step_matcher("re")
 
-@when("I open (?P<link>.+) using (?P<browser>.+)")
+
+@given("I open (?P<link>.+) using (?P<browser>.+)")
 def step_impl(context, link, browser):
     """
     :type context: behave.runner.Context
@@ -16,14 +17,26 @@ def step_impl(context, link, browser):
     """
 
     client = getattr(context, browser)
-
     client.get(link)
+
+
+@when("I have (?P<expected_count>.+) links within school menu items using (?P<browser>.+)")
+def step_impl(context, expected_count, browser):
+    """
+    :type context: behave.runner.Context
+    :type expected_count: int
+    :type browser: str
+    """
+    count = 0
+    client = getattr(context, browser)
+
+    menu_list = client.find_element_by_xpath('//li[contains(@id,"school")]/ul')
+    options = [x for x in menu_list.find_elements_by_tag_name("li")]
+    for x in options:
+        if x.find_elements_by_tag_name("a"):
+            count += 1
+    assert count == int(expected_count)
     time.sleep(Env.vars['wait_time'])
-    attach(
-        client.get_screenshot_as_png(),
-        name="screenshot",
-        attachment_type=AttachmentType.PNG
-    )
 
 
 @then("I take screenshot using (?P<browser>.+)")
