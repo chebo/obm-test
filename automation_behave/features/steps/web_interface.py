@@ -63,8 +63,8 @@ def step_impl(context, browser):
         students_card[x.text.split(",")[0]] = x.text.split(",")[1].split("-")
 
     for x in students_card.keys():
-        student_grade = students_card[x][0].replace(' ', '')
-        student_result = students_card[x][1].replace(' ', '')
+        student_grade = students_card[x][0].strip()
+        student_result = students_card[x][1].strip()
         if float(student_grade) >= 7.5:
             assert student_result == "Passed", "Result lower, then expected for student {}".format(x)
         else:

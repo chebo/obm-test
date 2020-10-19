@@ -4,3 +4,5 @@ pycodestyle
 allure-behave
 allure-python-commons
 PyYAML
+pytest
+requests
